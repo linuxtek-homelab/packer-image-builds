@@ -62,6 +62,13 @@ Right-click the template in Proxmox VE, and select "Clone".
 - **full clone** is a complete copy and is fully independent from the original VM or VM Template, but it requires the same disk space as the original
 - **linked clone** requires less disk space but cannot run without access to the base VM Template. Not supported with LVM & ISCSI storage types
 
+## Debugging
+
+Troubleshooting SSL EOF:
+
+https://github.com/openssl/openssl/discussions/24810
+https://github.com/openssl/openssl/discussions/22690
+
 ## License
 
 GNU GPL v3
@@ -70,3 +77,4 @@ GNU GPL v3
 
 * https://github.com/romantomjak/packer-proxmox-template/tree/master
 * https://developer.hashicorp.com/packer/integrations/hashicorp/proxmox
+* https://docs.openssl.org/3.1/man3/SSL_CTX_set_options/#notes
