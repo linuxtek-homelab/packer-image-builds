@@ -36,11 +36,11 @@ source "proxmox-iso" "debian" {
   http_directory = "./"
   boot_wait      = "10s"
   boot_command   = ["<esc><wait>auto url=http://{{ .HTTPIP }}:{{ .HTTPPort }}/preseed.cfg<enter>"]
-  
+
   boot_iso {
-    type = "scsi"
+    type     = "scsi"
     iso_file = var.iso_file
-    unmount = true
+    unmount  = true
   }
 
   cloud_init              = true

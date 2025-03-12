@@ -34,7 +34,7 @@ variable "cpu_type" {
 
 variable "memory" {
   type    = string
-  default = "2048"
+  default = "8196"
 }
 
 variable "network_vlan" {
