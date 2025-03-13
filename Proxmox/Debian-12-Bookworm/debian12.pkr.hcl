@@ -11,7 +11,7 @@ source "proxmox-iso" "debian" {
   proxmox_url              = "https://${var.proxmox_host}/api2/json"
   insecure_skip_tls_verify = true
   username                 = var.proxmox_api_user
-  password                 = var.proxmox_api_password
+  token                    = var.proxmox_api_token
 
   template_description = "Built from ${basename(var.iso_file)} on ${formatdate("YYYY-MM-DD hh:mm:ss ZZZ", timestamp())}"
   node                 = var.proxmox_node
@@ -27,7 +27,7 @@ source "proxmox-iso" "debian" {
     disk_size    = var.disk_size
     format       = var.disk_format
     io_thread    = true
-    storage_pool = var.disk_storage_pool
+    storage_pool = var.storage_pool
     type         = "scsi"
   }
 
@@ -43,8 +43,9 @@ source "proxmox-iso" "debian" {
     unmount  = true
   }
 
+  qemu_agent              = true
   cloud_init              = true
-  cloud_init_storage_pool = var.cloudinit_storage_pool
+  cloud_init_storage_pool = var.cloud_init_storage_pool
 
   vm_name  = trimsuffix(basename(var.iso_file), ".iso")
   cpu_type = var.cpu_type
@@ -58,6 +59,7 @@ source "proxmox-iso" "debian" {
   # once that is done - the password will be set to random one by cloud init.
   ssh_password = "packer"
   ssh_username = "root"
+  ssh_timeout  = "15m"
 }
 
 build {

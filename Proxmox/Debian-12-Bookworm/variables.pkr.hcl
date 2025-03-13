@@ -2,7 +2,7 @@ variable "iso_file" {
   type = string
 }
 
-variable "cloudinit_storage_pool" {
+variable "cloud_init_storage_pool" {
   type    = string
   default = "local-lvm"
 }
@@ -22,7 +22,7 @@ variable "disk_size" {
   default = "20G"
 }
 
-variable "disk_storage_pool" {
+variable "storage_pool" {
   type    = string
   default = "local-lvm"
 }
@@ -47,7 +47,7 @@ variable "machine_type" {
   default = ""
 }
 
-variable "proxmox_api_password" {
+variable "proxmox_api_token" {
   type      = string
   sensitive = true
 }
