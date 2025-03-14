@@ -64,8 +64,19 @@ Right-click the template in Proxmox VE, and select "Clone".
 
 ## Debugging
 
-Troubleshooting SSL EOF:
+Enable Packer Logging:
+```
+export PACKER_LOG=1
+export PACKER_LOG_PATH="/tmp/packerlog.txt"
+```
 
+CURL API Key Test:
+`curl -k --request GET -H 'Authorization: PVEAPIToken=packer@pam!packer=apikey' https://ipaddress:8006/api2/json/access/permissions`
+
+SSL S_Client Test:
+`openssl s_client -connect ipaddress:8006`
+
+Troubleshooting SSL EOF error:
 https://github.com/openssl/openssl/discussions/24810
 https://github.com/openssl/openssl/discussions/22690
 
