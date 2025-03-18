@@ -19,7 +19,7 @@ variable "disk_format" {
 
 variable "disk_size" {
   type    = string
-  default = "20G"
+  default = "32G"
 }
 
 variable "storage_pool" {
