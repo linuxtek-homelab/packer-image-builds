@@ -67,31 +67,14 @@ build {
 
   # Install Backports and upgrade to latest 6.x kernel
   provisioner "shell" {
-    inline = [
-      "echo 'deb http://deb.debian.org/debian bookworm-backports main contrib non-free non-free-firmware' | sudo tee /etc/apt/sources.list.d/backports.list",
-      "sudo apt-get update",
-      "sudo apt-get install -y -t bookworm-backports linux-image-amd64 linux-headers-amd64",
-      "sudo update-grub",
-      "sudo reboot"
-    ]
+    script = "scripts/update-kernel.sh"
+    pause_before = "10s"
   }
 
   # Install key packages, prerequisites, and Docker
   provisioner "shell" {
-    inline = [
-      "echo 'Reconnected after reboot, finalizing image setup...'",
-      "echo 'debconf debconf/frontend select Noninteractive' | sudo debconf-set-selections",
-      "sudo apt-get update",
-      "sudo apt-get install -y ca-certificates curl git gpg htop openssl openssh-server python3",
-      "sudo install -m 0755 -d /etc/apt/keyrings",
-      "sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc",
-      "sudo chmod a+r /etc/apt/keyrings/docker.asc",
-      "echo 'deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian bookworm stable'| sudo tee /etc/apt/sources.list.d/docker.list > /dev/null",
-      "sudo apt-get update",
-      "sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin",
-      "sudo apt-get autoremove -y",
-      "sudo apt-get clean"
-    ]
+    script = "scripts/install-docker.sh"
+    pause_before = "10s"
   }
 
   provisioner "file" {
