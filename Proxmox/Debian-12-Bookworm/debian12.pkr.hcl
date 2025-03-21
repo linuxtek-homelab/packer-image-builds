@@ -9,9 +9,9 @@ packer {
 
 source "proxmox-iso" "debian" {
   proxmox_url              = "https://${var.proxmox_host}/api2/json"
-  insecure_skip_tls_verify = true
   username                 = var.proxmox_api_user
   token                    = var.proxmox_api_token
+  insecure_skip_tls_verify = true
 
   template_description = "Built from ${basename(var.iso_file)} on ${formatdate("YYYY-MM-DD hh:mm:ss ZZZ", timestamp())}"
   node                 = var.proxmox_node
@@ -59,11 +59,23 @@ source "proxmox-iso" "debian" {
   # once that is done - the password will be set to random one by cloud init.
   ssh_password = "packer"
   ssh_username = "root"
-  ssh_timeout  = "15m"
+  ssh_timeout  = "30m"
 }
 
 build {
   sources = ["source.proxmox-iso.debian"]
+
+  # Install Backports and upgrade to latest 6.x kernel
+  provisioner "shell" {
+    script = "scripts/update-kernel.sh"
+    pause_before = "10s"
+  }
+
+  # Install key packages, prerequisites, and Docker
+  provisioner "shell" {
+    script = "scripts/install-docker.sh"
+    pause_before = "10s"
+  }
 
   provisioner "file" {
     destination = "/etc/cloud/cloud.cfg"
