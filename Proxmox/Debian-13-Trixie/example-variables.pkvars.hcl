@@ -1,0 +1,9 @@
+proxmox_host            = "10.10.10.10:8006"
+proxmox_node            = "pve1"
+proxmox_api_user        = "packer@pam!packer"
+proxmox_api_token       = "secret-api-token-here"
+iso_file                = "storage-volume:iso/isofile.iso"
+cloud_init_storage_pool = "local"
+storage_pool            = "local"
+cores                   = 4
+memory                  = 8196
